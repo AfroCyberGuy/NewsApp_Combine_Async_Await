@@ -4,7 +4,7 @@ import Combine
 class ViewModel: ObservableObject {
   
   // MARK: - Input
-  @Published var searchTerm: String = "Tatiana Zavala"
+  @Published var searchTerm: String = ""
   
   
   // MARK: - Output

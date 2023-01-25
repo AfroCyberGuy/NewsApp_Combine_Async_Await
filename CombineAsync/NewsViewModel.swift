@@ -20,7 +20,7 @@ class NewsViewModel: ObservableObject {
       .flatMap { value in
         Future { promise in
           Task {
-            let result = await self.searchBooks(matching: value)
+            let result = await self.searchArticles(matching: value)
             promise(.success(result))
           }
         }
@@ -35,7 +35,7 @@ class NewsViewModel: ObservableObject {
   
   
   
-  func searchBooks(matching searchTerm: String) async -> [ArticleDetail] {
+  func searchArticles(matching searchTerm: String) async -> [ArticleDetail] {
     
     let queryItems = [
       URLQueryItem(name: "q", value: searchTerm),
@@ -57,21 +57,17 @@ class NewsViewModel: ObservableObject {
       
       guard (200 ... 299) ~= statusCode else { throw URLError(.cannotParseResponse) }
       
-      print(statusCode)
-      print(data)
-
-      var movies: [Article] = []
+      var articles: [Article] = []
       do {
         let searchResult = try   JSONDecoder().decode(NewsResponse.self, from: data)
        
-        movies = searchResult.articles ?? []
-        print("SEARCH_RESULTS: \(searchResult.totalResults ?? 0)")
+        articles = searchResult.articles ?? []
   
       } catch (let error){
         print(error)
       }
       
-      return movies.compactMap {
+      return articles.compactMap {
         ArticleDetail(
           source: $0.source!,
           author: $0.author ?? "",
@@ -88,7 +84,6 @@ class NewsViewModel: ObservableObject {
       return []
     }
   }
-  
   
   private func createRequest(_ queryItems: [URLQueryItem]) -> URLRequest? {
     var components = commonComponents
