@@ -43,12 +43,3 @@ struct NewsSearchRowView: View {
 }
 
 
-struct MovieSearchRowView: View {
-  let movie: MovieDetail
-  
-  var body: some View {
-    VStack{
-      Text(movie.title)
-    }
-  }
-}
