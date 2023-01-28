@@ -1,5 +1,6 @@
 import Foundation
 
+
 struct ArticleDetail: Codable, Identifiable {
   var id: UUID = UUID()
   let source: Source
